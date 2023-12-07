@@ -1,3 +1,4 @@
+import math
 from functools import cmp_to_key
 
 CARD_RANKS = ["A", "K", "Q", "J", "T", "9", "8", "7", "6", "5", "4", "3", "2"]
@@ -36,7 +37,7 @@ def get_card_type(hand):
             return ctype, idx
 
 def transform_joker_hand(hand: str):
-    highest_hand = -1
+    highest_hand = math.inf
 
     if 'J' not in hand:
         return get_card_type(hand)[0]
@@ -44,9 +45,9 @@ def transform_joker_hand(hand: str):
     for card_rank in CARD_RANKS_EX02[:-1]:
         temp_hand = hand.replace('J', card_rank)
         _, idx = get_card_type(temp_hand)
-        highest_hand = max(highest_hand, idx)
+        highest_hand = min(highest_hand, idx)
 
-    return card_checks[idx][0]
+    return card_checks[highest_hand][0]
 
 def stronger_high_card(current, other):
     current, other = current[0], other[0]
@@ -61,15 +62,21 @@ with open('data/data', 'r') as f:
 
 priority_queue = defaultdict(list)
 
-for card, rank in cards:
-    current_card_type = None
+# EX01
+#for card, rank in cards:
+#     current_card_type = None
+#
+#     for ctype, check in card_checks:
+#         if check(count_cards(card)):
+#             current_card_type = ctype
+#             break
+#
+#     priority_queue[current_card_type].append((card, rank))
 
-    for ctype, check in card_checks:
-        if check(count_cards(card)):
-            current_card_type = ctype
-            break
+for hand, rank in cards:
+    current_card_type = transform_joker_hand(hand)
+    priority_queue[current_card_type].append((hand, rank))
 
-    priority_queue[current_card_type].append((card, rank))
 
 
 print(priority_queue)
