@@ -101,12 +101,11 @@ def solve_ex01(seeds: list):
 
 def solve_ex02(seeds: list):
     lowest_location = math.inf
-    for seed in seeds:
-        print('Run with seed', seed)
-        data = [seed]
-        for map in maps:
-            data = transform_2(data, map)
-        lowest_location = min(sorted(data, key=lambda x: x[0])[0][0], lowest_location)
+    data = seeds
+    for map in maps:
+        data = transform_2(data, map)
+
+    lowest_location = min(sorted(data, key=lambda x: x[0])[0][0], lowest_location)
 
     print("Solved: ", lowest_location)
 
