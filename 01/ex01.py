@@ -19,7 +19,6 @@ def obtain_calibrations(lines: List[str], regex: re.Pattern) -> int:
 
 if __name__ == '__main__':
     with open('data/input', 'r') as f:
-        print(f'Solution 01: {sum(obtain_calibrations(f.readlines(), cal_extract_ex01))}')
-
-    with open('data/input', 'r') as f:
-        print(f'Solution 02: {sum(obtain_calibrations(f.readlines(), cal_extract_ex02))}')
+        lines = f.readlines()
+    print(f'Solution 01: {sum(obtain_calibrations(lines, cal_extract_ex01))}')
+    print(f'Solution 02: {sum(obtain_calibrations(lines, cal_extract_ex02))}')
